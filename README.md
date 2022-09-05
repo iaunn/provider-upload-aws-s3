@@ -38,20 +38,25 @@ module.exports = ({ env }) => ({
   // ...
   upload: {
     config: {
-      provider: 'aws-s3',
+      provider: '@iaunn/provider-upload-aws-s3',
       providerOptions: {
-        accessKeyId: env('AWS_ACCESS_KEY_ID'),
-        secretAccessKey: env('AWS_ACCESS_SECRET'),
-        region: env('AWS_REGION'),
-        params: {
-          Bucket: env('AWS_BUCKET'),
+        config: {
+            endpoint: env('AWS_ENDPOINT'),
+            accessKeyId: env('AWS_ACCESS_KEY_ID'),
+            secretAccessKey: env('AWS_ACCESS_SECRET'),
+
+            region: env('AWS_REGION'),
+            signatureVersion: 'v4',
+            s3ForcePathStyle: true
         },
-      },
-      actionOptions: {
-        upload: {},
-        uploadStream: {},
-        delete: {},
-      },
+        params: {
+            Bucket: env('AWS_BUCKET')
+        },
+        cdn: {
+            baseUrl: env('AWS_BASE_URL'),
+            defaultPath: env('AWS_DEFAULT_PATH'),
+        }
+      }
     },
   },
   // ...
